@@ -1,26 +1,258 @@
 @import "tailwindcss";
+/* @import "tw-animate-css"; */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* @plugin "daisyui" {
+     include: carousel, glass, loading;
+     themes: false;
+} */
+
+
+
+@theme {
+     --color-primary-main: #CB6CE6;  /* Main brand color */
+     --color-primary-light: #D589EB; /* Lighter shade */
+     --color-primary-soft: #E5B5F2;  /* Softer shade */
+     --color-primary-pale: #F4E1FA;  /* Lightest shade */
+
+     --color-secondary-main: #131326;
+     --color-secondary-light: #2c2c3f;
+     --color-secondary-soft: #444455; 
+     --color-secondary-pale: #a1a1aa; 
+
+     --color-black: #0B0C17;
+     --color-black-light: #32354E;
+     --color-black-soft: #494C61;
+     --color-black-pale: #767989;
+
+     --color-gray-main: #A4A5B0;
+     --color-gray-light: #B6B7C0;
+     --color-gray-soft: #D1D2D7;
+     --color-gray-pale: #EDEDEF;
+
+     /* font sizes */
+     --text-xs: 0.813rem; /* 13px */
+     --text-sm: 0.88rem; /* 14px */
+     --text-base: 0.938rem; /* 15px */
+     --text-md: 1.065rem; /* 17px */
+     --text-lg: 1.25rem; /* 20px */
+     --text-xl: 1.7rem; /* 27.2px */
+     --text-2xl: 1.95rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+@layer components {
+     .btn {
+          @apply px-6 py-1.5 rounded-full bg-primary-main text-white font-semibold shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition-colors focus:outline-none hover:bg-primary-light;
+          /* [0_5px_25px_rgba(0,1,0,0.2)] */
+     }
+
+     .see-all-btn {
+          @apply px-5 py-[0.26rem] rounded-full bg-primary-pale text-primary-main text-[13.8px] font-semibold shadow-md hover:bg-primary-soft hover:text-white transition-colors focus:outline-none;
+     }
+
+     .navigation-btn {
+          @apply w-[2.42rem] h-[2.42rem] flex items-center justify-center rounded-full backdrop-blur-sm bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all;
+     }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+
+@layer utilities {
+     .page-heading {
+          @apply text-2xl text-secondary-light font-bold;
+     }
+
+     .card-section {
+          @apply h-[16.9em] flex flex-col justify-between overflow-hidden;
+     }
+
+     .section-heading {
+          @apply text-lg font-bold text-secondary-light tracking-tight;
+     }
+
+     .card-title {
+          @apply text-sm font-bold text-secondary-soft text-left;
+     }
+
+     .card-description {
+          @apply text-xs text-black-pale;
+     }
+
+     .slider-container {
+          @apply h-[75%] flex items-center bg-transparent overflow-x-auto space-x-4 pb-5 px-2 scroll-smooth snap-x snap-mandatory shadow-2xl;
+     }
+
+     .icon{
+          @apply size-5 fill-primary-light;
+     }
+
+     .bg-overlay {
+          @apply absolute inset-0 bg-gradient-to-t from-secondary-main/70 to-secondary-main/10 z-10;
+     }
 }
+
+
+::-webkit-scrollbar {
+     display: none;
+}
+
+
+html {
+     touch-action: manipulation;
+     -webkit-tap-highlight-color: transparent;
+     -webkit-touch-callout: none;
+     -webkit-overflow-scrolling: touch;
+     background-color: var(--color-gray-main);
+}
+
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+     scroll-behavior: smooth;
+     overflow-x: hidden;
+     overscroll-behavior: none;
+     max-width: 450px;
+     margin: auto;
+     /*border: 1px solid var(--color-secondary-light);*/
+     background-color: #fff;
+     /*box-shadow: 0, 4px, 20px, 0 rgba(0,0,0,0.2);*/
+}
+
+
+main {
+     max-width: 450px;
+     /*height: 100vh;*/
+     min-height: 100vh;
+     overflow-y: scroll;
+}
+
+
+img, svg {
+     user-select: none;
+     -webkit-user-drag: none;
+     -webkit-user-select: none;
+}
+
+
+p, h1, h2, h3 {
+     overflow: hidden;
+     /*white-space: nowrap;*/
+     text-overflow: ellipsis;
+}
+
+
+
+/* animations for product modal */
+@keyframes slideUp {
+     from {
+          transform: translateY(100%);
+     }
+     to {
+          transform: translateY(0);
+     }
+}
+
+@keyframes slideDown {
+     from {
+          transform: translateY(0);
+     }
+     to {
+          transform: translateY(100%);
+     }
+}
+
+.data-[state=open] {
+     animation: slideUp 0.3s ease-out forwards;
+}
+
+.data-[state=closed] {
+     animation: slideDown 0.3s ease-in forwards;
+}
+
+
+
+
+/* toast container */
+.custom-sonner {
+     /*bottom: auto !important;*/
+     /*--blue-black-900: hsl(220, 78%, 10%);*/
+     /*--blue-black-800: hsl(220, 78%, 15%);*/
+
+     /*background: var(--blue-black-900) !important;*/
+     /*border: 1px solid var(--blue-black-800) !important;*/
+     color: white !important;
+     top: 20px !important; /* spacing from the top */
+     z-index: 5000;
+     animation: slideDown 0.3s ease-out forwards;
+     gap: 12px !important; /* for stacked toasts */
+     --toast-width: 88vw;
+     --toast-height: 60px;
+     left: 50% !important;
+     transform: translateX(-50%) !important;
+     width: 100vw !important;
+     max-width: 100% !important;
+     display: flex !important;
+     flex-direction: column !important;
+     align-items: center !important;
+     padding: 0 !important;
+     margin: 0 auto !important;
+     pointer-events: none !important;
+}
+
+
+
+/* Individual toast */
+.custom-toast {
+     width: var(--toast-width) !important;
+     min-height: var(--toast-height) !important;
+     max-width: min(400px, 90vw) !important;
+     margin: 0 !important;
+     left: auto !important;
+     right: auto !important;
+     transform: none !important;
+     animation: slideDown 0.3s ease-out forwards !important;
+}
+
+/* Toast content area */
+.custom-toast [data-sonner-toast] {
+     width: 100% !important;
+     height: 100% !important;
+     padding: 12px 16px !important;
+     margin: 0 !important;
+}
+
+
+.custom-toast [data-sonner-toast] .toast-description {
+     color: hsl(0, 0%, 100%) !important; /* Light gray */
+     font-size: 0.875rem !important;
+     line-height: 1.25rem !important;
+     margin-top: 0.25rem !important;
+}
+
+/* for different colors for different toast types */
+/*.custom-toast [data-sonner-toast][data-type="success"] .toast-description {*/
+/*     color: hsl(142, 76%, 85%) !important; !* Success green *!*/
+/*}*/
+
+/*.custom-toast [data-sonner-toast][data-type="error"] .toast-description {*/
+/*     color: hsl(0, 91%, 85%) !important; !* Error red *!*/
+/*}*/
+
+/*.custom-toast [data-sonner-toast][data-type="warning"] .toast-description {*/
+/*     color: hsl(38, 92%, 85%) !important; !* Warning orange *!*/
+/*}*/
+
+/*.custom-toast [data-sonner-toast][data-type="info"] .toast-description {*/
+/*     color: hsl(221, 91%, 85%) !important; !* Info blue *!*/
+/*}*/
+
+
+@keyframes slideDown {
+     from {
+          transform: translateY(-100%);
+          opacity: 0;
+     }
+     to {
+          transform: translateY(0);
+          opacity: 1;
+     }
 }
