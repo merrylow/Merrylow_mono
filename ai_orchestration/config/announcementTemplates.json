@@ -1,0 +1,18 @@
+{
+  "_TODO": "CREATE ANNOUNCEMENT TEMPLATES FOR KDS ORDER ANNOUNCEMENTS",
+  "_PURPOSE": "Replace AI/LLM with pre-defined templates for varied, natural TTS",
+  "_WHAT_TO_IMPLEMENT": [
+    "Add multiple announcement variations to avoid repetitive TTS",
+    "Create templates for different order types (rush, large, single item)",
+    "Include time-based greetings (morning, evening)",
+    "Add connecting words for natural flow between items",
+    "Implement template selection rules based on order context"
+  ],
+  "_TEMPLATE_VARIABLES": [
+    "{items} - formatted order items with pronunciation",
+    "{table} - table number", 
+    "{notes} - special instructions",
+    "{quantity} - item quantity",
+    "{dish} - dish name with proper pronunciation"
+  ]
+}
