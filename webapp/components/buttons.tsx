@@ -4,15 +4,15 @@ import React from 'react'
 import usePlaceOrder from '@/hooks/usePlaceOrder'
 
 type PlaceOrderButtonProps = {
-  productId: string
-  quantity: number
-  tableId: string
+  productName: string
+  price: number
+  tableId: number
   note: string
 }
 
 const PlaceOrderButton = ({
-  productId,
-  quantity,
+  productName,
+  price,
   tableId,
   note,
 }: PlaceOrderButtonProps) => {
@@ -20,9 +20,9 @@ const PlaceOrderButton = ({
 
   const handleSubmit = async () => {
     const { data, error } = await placeOrder({
-      menu_id: productId,
-      quantity,
-      table_id: tableId,
+      name: productName,
+      price,
+      table_no: tableId,
       note,
     })
 
@@ -31,8 +31,7 @@ const PlaceOrderButton = ({
       return
     }
 
-    console.log('Order placed successfully:', data)
-    // maybe redirect or toast user
+    // console.log('Order placed successfully:', data)
   }
 
   return (

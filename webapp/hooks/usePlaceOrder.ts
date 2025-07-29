@@ -3,23 +3,24 @@
 import { supabase } from '@/lib/supabase'
 
 type PlaceOrderInput = {
-  menu_id: string
-  quantity: number
-  table_id: string
+  name: string
+  price: number
+  table_no: number
   note: string
 }
 
 export default function usePlaceOrder() {
   const placeOrder = async ({
-    menu_id,
-    quantity,
-    table_id,
+    name,
+    price,
+    table_no,
     note,
   }: PlaceOrderInput) => {
-    // 1. Create the order
+    // creates the order
     const { data: orderData, error: orderError } = await supabase
-      .from('orders')
-      .insert([{ table_id, note, status: 'pending' }])
+      .from('orders_demo')
+      // .insert([{ name, table_no,price, note, status: 'pending' }])
+      .insert({ name, table_no, price, note, status: 'pending' })
       .select()
       .single()
 
@@ -28,23 +29,23 @@ export default function usePlaceOrder() {
       return { error: orderError }
     }
 
-    // 2. Create order item linked to that order
-    const { data: itemData, error: itemError } = await supabase
-      .from('order_items')
-      .insert([
-        {
-          order_id: orderData.id,
-          menu_id,
-          quantity,
-        },
-      ])
+    // creates order item linked to that order
+  //   const { data: itemData, error: itemError } = await supabase
+  //     .from('order_items')
+  //     .insert([
+  //       {
+  //         order_id: orderData.id,
+  //         menu_id,
+  //         quantity,
+  //       },
+  //     ])
 
-    if (itemError) {
-      console.error('Failed to create order item:', itemError)
-      return { error: itemError }
-    }
+  //   if (itemError) {
+  //     console.error('Failed to create order item:', itemError)
+  //     return { error: itemError }
+  //   }
 
-    return { data: { order: orderData, items: itemData } }
+  //   return { data: { order: orderData, items: itemData } }
   }
 
   return { placeOrder }
