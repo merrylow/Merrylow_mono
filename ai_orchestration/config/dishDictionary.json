@@ -1,0 +1,92 @@
+{
+  "_TODO": "GHANAIAN DISH PRONUNCIATION FOR KDS TTS ANNOUNCEMENTS",
+  "_PURPOSE": "Help TTS pronounce Ghanaian dishes correctly for kitchen staff",
+  "_GHANAIAN_DISHES_TO_ADD": [
+    "Banku with tilapia", "Fufu with goat soup", "Waakye", "Kelewele", 
+    "Tuo Zaafi", "Red red", "Konkonte", "Ampesi", "Shito", "Palm nut soup"
+  ],
+  "dishes": {
+    "banku": {
+      "name": "Banku",
+      "pronunciation": "BAHN-koo",
+      "alternatives": ["banku with tilapia", "banku and fish", "banku with soup"],
+      "category": "staples"
+    },
+    "fufu": {
+      "name": "Fufu",
+      "pronunciation": "FOO-foo",
+      "alternatives": ["fufu with soup", "cassava fufu", "plantain fufu"],
+      "category": "staples"
+    },
+    "waakye": {
+      "name": "Waakye",
+      "pronunciation": "WAH-chay",
+      "alternatives": ["waakye with stew", "waakye and gari", "beans and rice"],
+      "category": "rice_dishes"
+    },
+    "kelewele": {
+      "name": "Kelewele",
+      "pronunciation": "keh-leh-WEH-leh",
+      "alternatives": ["spiced plantain", "fried plantain cubes"],
+      "category": "sides"
+    },
+    "jollof_rice": {
+      "name": "Jollof Rice",
+      "pronunciation": "JOH-lof rice",
+      "alternatives": ["jollof", "party rice", "jollof with chicken"],
+      "category": "rice_dishes"
+    },
+    "red_red": {
+      "name": "Red Red",
+      "pronunciation": "red red",
+      "alternatives": ["beans stew", "red red with gari", "black eyed peas"],
+      "category": "stews"
+    },
+    "tuo_zaafi": {
+      "name": "Tuo Zaafi",
+      "pronunciation": "TOO-oh ZAH-fee",
+      "alternatives": ["tuo", "northern rice balls"],
+      "category": "staples"
+    },
+    "shito": {
+      "name": "Shito",
+      "pronunciation": "SHEE-toh",
+      "alternatives": ["black pepper sauce", "shito sauce"],
+      "category": "sauces"
+    },
+    "konkonte": {
+      "name": "Konkonte",
+      "pronunciation": "kon-KON-teh",
+      "alternatives": ["cassava powder", "face the wall"],
+      "category": "staples"
+    },
+    "ampesi": {
+      "name": "Ampesi",
+      "pronunciation": "am-PEH-see",
+      "alternatives": ["boiled yam", "boiled plantain", "ampesi with stew"],
+      "category": "staples"
+    }
+  },
+  "categories": {
+    "rice_dishes": {
+      "name": "Rice-based meals",
+      "description": "Jollof, waakye, and other rice dishes"
+    },
+    "staples": {
+      "name": "Traditional staples",
+      "description": "Banku, fufu, ampesi, and other main starches"
+    },
+    "stews": {
+      "name": "Stews and sauces", 
+      "description": "Red red, palm nut soup, and other sauces"
+    },
+    "sides": {
+      "name": "Side dishes",
+      "description": "Kelewele, plantain, and accompaniments"
+    },
+    "sauces": {
+      "name": "Sauces and condiments",
+      "description": "Shito and other flavor enhancers"
+    }
+  }
+}
