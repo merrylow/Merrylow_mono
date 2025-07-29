@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 interface Props {
-  tableIdFromURL: string | null
+  tableIdFromURL: number
 }
 
 const TableOrderClient = ({ tableIdFromURL }: Props) => {
@@ -12,8 +12,8 @@ const TableOrderClient = ({ tableIdFromURL }: Props) => {
 
   useEffect(() => {
     if (tableIdFromURL) {
-      localStorage.setItem('merrylow_table_id', tableIdFromURL);
-      setTableId(tableIdFromURL)
+      localStorage.setItem('merrylow_table_id', String(tableIdFromURL));
+      setTableId(String(tableIdFromURL))
     } else {
       const fromStorage = localStorage.getItem('merrylow_table_id')
       if (fromStorage) setTableId(fromStorage)

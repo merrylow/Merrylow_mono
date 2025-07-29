@@ -5,7 +5,7 @@ import usePlaceOrder from '@/hooks/usePlaceOrder'
 
 type PlaceOrderButtonProps = {
   productName: string
-  price: number
+  price: string
   tableId: number
   note: string
 }
@@ -31,7 +31,7 @@ const PlaceOrderButton = ({
       return
     }
 
-    // console.log('Order placed successfully:', data)
+    console.log('Order placed successfully:', data)
   }
 
   return (

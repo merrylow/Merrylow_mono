@@ -4,15 +4,13 @@ import { useState } from 'react'
 import { PlaceOrderButton } from '@/components/buttons'
 
 type Props = {
-  tableId: string
+  tableId: number
 }
 
 const OrderFormClient = ({ tableId }: Props) => {
   const [productName, setProductName] = useState('')
   const [price, setPrice] = useState('')
   const [note, setNote] = useState('')
-  // const [productId, setProductId] = useState('') // actually menu_id in the db
-  // const [quantity, setQuantity] = useState(1)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,19 +31,6 @@ const OrderFormClient = ({ tableId }: Props) => {
             required
           />
         </div>
-
-        {/* <div>
-          <label className="block font-medium mb-1">Quantity</label>
-          <input
-            title='quantity'
-            type="number"
-            min={1}
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            className="input input-bordered w-full"
-            required
-          />
-        </div> */}
         
         <div>
           <label className="block font-medium mb-1">Price: </label>

@@ -1,13 +1,30 @@
 'use client'
 
 import { supabase } from '@/lib/supabase'
+import { PostgrestError } from '@supabase/supabase-js'
 
 type PlaceOrderInput = {
   name: string
-  price: number
+  price: string
   table_no: number
   note: string
 }
+
+type OrderData = {
+  id: string
+  name: string
+  price: string
+  table_no: number
+  note: string
+  status: string
+  created_at: string
+}
+
+type PlaceOrderResponse = {
+  data?: OrderData
+  error: PostgrestError | null
+}
+
 
 export default function usePlaceOrder() {
   const placeOrder = async ({
@@ -15,37 +32,36 @@ export default function usePlaceOrder() {
     price,
     table_no,
     note,
-  }: PlaceOrderInput) => {
-    // creates the order
-    const { data: orderData, error: orderError } = await supabase
+  }: PlaceOrderInput): Promise<PlaceOrderResponse> => {
+      const numericPrice = Number(price)
+
+       // validate conversion
+    if (isNaN(numericPrice)) {
+      return { error: { message: 'Invalid price format', details: '', hint: '', name: '', code: 'INVALID_PRICE' } }
+    }
+
+    const { data, error } = await supabase
       .from('orders_demo')
-      // .insert([{ name, table_no,price, note, status: 'pending' }])
-      .insert({ name, table_no, price, note, status: 'pending' })
+      .insert({ 
+        name, 
+        table_no, 
+        price: numericPrice, 
+        note, 
+        status: 'pending' 
+      })
       .select()
       .single()
 
-    if (orderError || !orderData) {
-      console.error('Failed to create order:', orderError)
-      return { error: orderError }
+    if (error) {
+      console.error('Failed to create order: ', error)
+      return { error }
     }
 
-    // creates order item linked to that order
-  //   const { data: itemData, error: itemError } = await supabase
-  //     .from('order_items')
-  //     .insert([
-  //       {
-  //         order_id: orderData.id,
-  //         menu_id,
-  //         quantity,
-  //       },
-  //     ])
+    if (!data) {
+      return { error: { message: 'No data returned', details: '', hint: '', name: '', code: 'PGRST116' } }
+    }
 
-  //   if (itemError) {
-  //     console.error('Failed to create order item:', itemError)
-  //     return { error: itemError }
-  //   }
-
-  //   return { data: { order: orderData, items: itemData } }
+    return { data, error: null }
   }
 
   return { placeOrder }
