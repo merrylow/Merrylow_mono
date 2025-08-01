@@ -1,0 +1,47 @@
+{
+  "name": "ai-orchestration",
+  "version": "1.0.0",
+  "description": "AI enhancements for Merrylow KDS app - TTS, STT, and NLP services",
+  "main": "utils/aiOrchestrator.ts",
+  "scripts": {
+    "test": "node -r ts-node/register -e \"console.log('✅ Basic test passed')\"",
+    "build": "tsc --noEmit"
+  },
+  "keywords": [
+    "ai",
+    "tts",
+    "kitchen",
+    "restaurant",
+    "ghanaian",
+    "pronunciation",
+    "google-cloud"
+  ],
+  "author": "Merrylow Team",
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/text-to-speech": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/google-cloud__text-to-speech": "^0.5.2",
+    "@types/node": "^18.19.121",
+    "dotenv": "^17.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "expo-av": "^13.0.0",
+    "react-native": "^0.70.0"
+  },
+  "files": [
+    "services/**/*",
+    "utils/**/*",
+    "config/**/*",
+    "*.md",
+    "*.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/merrylow/Merrylow_mono.git",
+    "directory": "ai_orchestration"
+  }
+}

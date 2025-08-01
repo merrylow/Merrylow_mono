@@ -15,4 +15,12 @@
     "{quantity} - item quantity",
     "{dish} - dish name with proper pronunciation"
   ]
+,
+  "templates": {
+    "standard": "New order for table {table}... {items}",
+    "urgent": "Rush order! {items} for table {table} - priority!",
+    "large_order": "Big order coming in... {items} for table {table}",
+    "quiet_hours": "Gentle reminder... {items} for table {table}",
+    "busy_hours": "Kitchen alert! {items} for table {table}"
+  }
 }
