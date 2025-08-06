@@ -1,4 +1,4 @@
-import AiTastAnalyzer from "./AiTaskAnlalyzer";
+import AiTaskAnalyzer from "./AiTaskAnalyzer";
 import localAI from "./localAI";
 import performTask from "./performTask";
 
@@ -9,7 +9,7 @@ type ReturnType = {
 
 const getTask = async (vendorSpeech: string): Promise<ReturnType> => {
   try {
-    const task = await AiTastAnalyzer(vendorSpeech).catch(() =>
+    const task = await AiTaskAnalyzer(vendorSpeech).catch(() =>
       localAI(vendorSpeech)
     );
     const [taskNumber, ...args] = task.split(",").map((s) => s.trim());

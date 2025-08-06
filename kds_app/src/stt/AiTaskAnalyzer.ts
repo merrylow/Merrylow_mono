@@ -1,4 +1,4 @@
-const AiTastAnalyzer = async (vendorSpeech: string): Promise<string> => {
+const AiTaskAnalyzer = async (vendorSpeech: string): Promise<string> => {
   // }
   //  include a typical order data details...
 
@@ -82,4 +82,4 @@ Now here is what the vendor said "${vendorSpeech}"
   return text;
 };
 
-export default AiTastAnalyzer;
+export default AiTaskAnalyzer;
