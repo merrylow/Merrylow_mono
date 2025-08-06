@@ -1,4 +1,4 @@
-import AiTastAnalyzer from "./AiTaskAnlalyzer";
+import AiTastAnalyzer from "./AiTaskAnalyzer";
 import localAI from "./localAI";
 import performTask from "./performTask";
 
