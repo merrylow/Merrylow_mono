@@ -20,15 +20,14 @@ export function OrderCard({ order, onStatusUpdate, style }: OrderCardProps) {
     let newStatus: OrderStatus;
     
     switch (order.status) {
-      case 'incoming':
-        newStatus = 'processing';
-        break;
-      case 'processing':
       case 'pending':
-        newStatus = 'complete';
+        newStatus = 'in_progress';
+        break;
+      case 'in_progress':
+        newStatus = 'completed';
         break;
       default:
-        return; // Don't update if already complete
+        return; // Don't update if already completed or rejected
     }
     
     onStatusUpdate(order.id, newStatus);
@@ -36,13 +35,14 @@ export function OrderCard({ order, onStatusUpdate, style }: OrderCardProps) {
 
   const getStatusColor = (): string => {
     switch (order.status) {
-      case 'incoming':
-        return COLORS.incoming;
-      case 'processing':
       case 'pending':
+        return COLORS.incoming;
+      case 'in_progress':
         return COLORS.processing;
-      case 'complete':
+      case 'completed':
         return COLORS.complete;
+      case 'rejected':
+        return COLORS.onSurfaceVariant;
       default:
         return COLORS.onSurfaceVariant;
     }
@@ -50,13 +50,14 @@ export function OrderCard({ order, onStatusUpdate, style }: OrderCardProps) {
 
   const getStatusText = (): string => {
     switch (order.status) {
-      case 'incoming':
-        return 'INCOMING';
-      case 'processing':
       case 'pending':
-        return 'PROCESSING';
-      case 'complete':
-        return 'COMPLETE';
+        return 'PENDING';
+      case 'in_progress':
+        return 'IN PROGRESS';
+      case 'completed':
+        return 'COMPLETED';
+      case 'rejected':
+        return 'REJECTED';
       default:
         return (order.status as string).toUpperCase();
     }

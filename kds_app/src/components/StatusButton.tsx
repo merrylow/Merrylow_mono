@@ -17,12 +17,14 @@ interface StatusButtonProps {
 export function StatusButton({ status, onPress, disabled = false, style }: StatusButtonProps) {
   const getButtonText = (): string => {
     switch (status) {
-      case 'incoming':
-        return 'Mark as Processing';
-      case 'processing':
+      case 'pending':
+        return 'Start Cooking';
+      case 'in_progress':
         return 'Mark as Ready';
-      case 'complete':
+      case 'completed':
         return 'Completed';
+      case 'rejected':
+        return 'Rejected';
       default:
         return 'Update Status';
     }
@@ -30,18 +32,20 @@ export function StatusButton({ status, onPress, disabled = false, style }: Statu
 
   const getButtonColor = (): string => {
     switch (status) {
-      case 'incoming':
-        return COLORS.processing;  // Blue for "mark as processing"
-      case 'processing':
+      case 'pending':
+        return COLORS.processing;  // Blue for "start cooking"
+      case 'in_progress':
         return COLORS.complete;    // Green for "mark as ready/complete"
-      case 'complete':
+      case 'completed':
         return COLORS.onSurfaceVariant; // Gray for completed (disabled state)
+      case 'rejected':
+        return COLORS.onSurfaceVariant; // Gray for rejected (disabled state)
       default:
         return COLORS.primary;
     }
   };
 
-  const isDisabled = disabled || status === 'complete';
+  const isDisabled = disabled || status === 'completed' || status === 'rejected';
 
   return (
     <TouchableOpacity

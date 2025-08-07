@@ -21,14 +21,14 @@ import { COLORS } from '../constants/theme';
  */
 
 /**
- * Normalize order status - assign 'incoming' to orders with invalid or missing status
+ * Normalize order status - assign 'pending' to orders with invalid or missing status
  */
 function normalizeOrderStatus(order: Order): Order {
-  const validStatuses: OrderStatus[] = ['incoming', 'processing', 'pending', 'complete'];
+  const validStatuses: OrderStatus[] = ['pending', 'in_progress', 'completed', 'rejected'];
   
   if (!order.status || !validStatuses.includes(order.status as OrderStatus)) {
-    console.log(`Normalizing order ${order.id} status from '${order.status}' to 'incoming'`);
-    return { ...order, status: 'incoming' };
+    console.log(`Normalizing order ${order.id} status from '${order.status}' to 'pending'`);
+    return { ...order, status: 'pending' };
   }
   
   return order;
@@ -51,31 +51,44 @@ export function KitchenDisplayScreen() {
       const { data: activeData, error: activeError } = await fetchActiveOrders();
       if (activeError) {
         console.error('Error loading active orders:', activeError);
-        Alert.alert('Error', 'Failed to load active orders.');
-        return;
+        console.log('Active error details:', JSON.stringify(activeError, null, 2));
+        // Don't return immediately - try to continue with what we have
+        Alert.alert('Warning', `Failed to load some active orders: ${activeError.message || 'Unknown error'}`);
       }
 
       // Load completed orders
       const { data: completedData, error: completedError } = await fetchCompletedOrders();
       if (completedError) {
         console.error('Error loading completed orders:', completedError);
-        Alert.alert('Error', 'Failed to load completed orders.');
-        return;
+        console.log('Completed error details:', JSON.stringify(completedError, null, 2));
+        Alert.alert('Warning', `Failed to load completed orders: ${completedError.message || 'Unknown error'}`);
       }
 
-      if (activeData) {
+      if (activeData && activeData.length > 0) {
         // Normalize orders and separate by status
         const normalizedOrders = activeData.map(normalizeOrderStatus);
-        const incoming = normalizedOrders.filter(order => order.status === 'incoming');
-        const processing = normalizedOrders.filter(order => order.status === 'processing' || order.status === 'pending');
         
-        setIncomingOrders(incoming);
-        setProcessingOrders(processing);
+        // Incoming orders (pending - new orders ready to be started)
+        const incomingOrders = normalizedOrders.filter(order => order.status === 'pending');
+        // Processing orders (in_progress - orders being worked on)
+        const processingOrders = normalizedOrders.filter(order => order.status === 'in_progress');
+        
+        console.log(`Loaded ${incomingOrders.length} incoming orders and ${processingOrders.length} processing orders`);
+        setIncomingOrders(incomingOrders);
+        setProcessingOrders(processingOrders);
+      } else {
+        console.log('No active orders found');
+        setIncomingOrders([]);
+        setProcessingOrders([]);
       }
 
-      if (completedData) {
+      if (completedData && completedData.length > 0) {
         const normalizedCompletedOrders = completedData.map(normalizeOrderStatus);
+        console.log(`Loaded ${normalizedCompletedOrders.length} completed orders`);
         setCompletedOrders(normalizedCompletedOrders);
+      } else {
+        console.log('No completed orders found');
+        setCompletedOrders([]);
       }
     } catch (error) {
       console.error('Error in loadOrders:', error);
@@ -103,16 +116,15 @@ export function KitchenDisplayScreen() {
     switch (payload.eventType) {
       case 'INSERT':
         // Add new order to appropriate section
-        // Treat "pending" status as "processing"
-        if (payload.new.status === 'incoming') {
+        if (payload.new.status === 'pending') {
           setIncomingOrders(prev => [payload.new, ...prev]);
           // Announce incoming order with TTS
           speakOrder(payload.new).catch(error => {
-            console.error('TTS error for incoming order:', error);
+            console.error('TTS error for new order:', error);
           });
-        } else if (payload.new.status === 'processing' || payload.new.status === 'pending') {
+        } else if (payload.new.status === 'in_progress') {
           setProcessingOrders(prev => [payload.new, ...prev]);
-        } else if (payload.new.status === 'complete') {
+        } else if (payload.new.status === 'completed' || payload.new.status === 'rejected') {
           setCompletedOrders(prev => [payload.new, ...prev]);
         }
         break;
@@ -127,16 +139,15 @@ export function KitchenDisplayScreen() {
         setCompletedOrders(prev => prev.filter(order => order.id !== orderId));
         
         // Add to appropriate section based on new status
-        // Treat "pending" status as "processing"
-        if (updatedOrder.status === 'incoming') {
+        if (updatedOrder.status === 'pending') {
           setIncomingOrders(prev => [updatedOrder, ...prev]);
-          // Announce if order status changed to incoming
+          // Announce if order status changed to pending
           speakOrder(updatedOrder).catch(error => {
-            console.error('TTS error for updated incoming order:', error);
+            console.error('TTS error for updated order:', error);
           });
-        } else if (updatedOrder.status === 'processing' || updatedOrder.status === 'pending') {
+        } else if (updatedOrder.status === 'in_progress') {
           setProcessingOrders(prev => [updatedOrder, ...prev]);
-        } else if (updatedOrder.status === 'complete') {
+        } else if (updatedOrder.status === 'completed' || updatedOrder.status === 'rejected') {
           setCompletedOrders(prev => [updatedOrder, ...prev]);
         }
         break;
@@ -168,9 +179,9 @@ export function KitchenDisplayScreen() {
       setProcessingOrders(prev => prev.filter(order => order.id !== orderId));
       
       // Add to new section based on status
-      if (newStatus === 'processing') {
+      if (newStatus === 'in_progress') {
         setProcessingOrders(prev => [updatedOrder, ...prev]);
-      } else if (newStatus === 'complete') {
+      } else if (newStatus === 'completed' || newStatus === 'rejected') {
         setCompletedOrders(prev => [updatedOrder, ...prev]);
       }
       

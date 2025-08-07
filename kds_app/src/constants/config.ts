@@ -12,6 +12,7 @@ export const SUPABASE_CONFIG = {
  */
 export const TABLE_NAMES = {
   ORDERS: 'orders_demo',
+  MENU: 'menus',
 } as const;
 
 /**
@@ -25,7 +26,8 @@ export const CHANNELS = {
  * Order status constants
  */
 export const ORDER_STATUSES = {
-  INCOMING: 'incoming',
-  PROCESSING: 'processing',
-  COMPLETE: 'complete',
+  PENDING: 'pending',
+  IN_PROGRESS: 'in_progress',
+  COMPLETED: 'completed',
+  REJECTED: 'rejected',
 } as const;
