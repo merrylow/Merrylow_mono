@@ -13,6 +13,7 @@ import {
   unsubscribeFromOrders 
 } from '../services/supabase';
 import { speakOrder } from '../utils/formatOrder';
+import { STTButton } from '../components/STTButton';
 import { COLORS } from '../constants/theme';
 
 /**
@@ -242,7 +243,12 @@ export function KitchenDisplayScreen() {
         activeOrderCount={activeOrderCount}
         completedOrderCount={completedOrderCount}
       />
-      
+      {/* STT Button for vendor speech commands */}
+      <STTButton onResult={(data) => {
+        // Optionally handle returned data from speech command here
+        // For now, just reload orders in case of updates
+        loadOrders();
+      }} />
       {/* Screen Content */}
       <View style={styles.content}>
         {activeTab === 'active' ? (

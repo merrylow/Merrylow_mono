@@ -7,7 +7,7 @@ type ReturnType = {
   message: string;
 };
 
-const getTask = async (vendorSpeech: string): Promise<ReturnType> => {
+export const getTask = async (vendorSpeech: string): Promise<ReturnType> => {
   try {
     const task = await AiTaskAnalyzer(vendorSpeech).catch(() =>
       localAI(vendorSpeech)

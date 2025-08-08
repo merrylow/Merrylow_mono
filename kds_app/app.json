@@ -18,7 +18,8 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.anonymous.kdsapp"
     },
     "web": {
       "bundler": "metro"
