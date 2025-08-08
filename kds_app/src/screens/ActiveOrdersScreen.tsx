@@ -12,8 +12,8 @@ import { OrderCard } from '../components/OrderCard';
 import { COLORS, TYPOGRAPHY, SPACING } from '../constants/theme';
 
 interface ActiveOrdersScreenProps {
-  incomingOrders: Order[];
-  processingOrders: Order[];
+  incomingOrders: Order[]; // These are "incoming" status orders (brand new orders)
+  processingOrders: Order[]; // These are "pending" + "processing" status orders (being worked on)
   onStatusUpdate: (orderId: number, newStatus: OrderStatus) => void;
   isLoading: boolean;
   onRefresh: () => void;
@@ -22,6 +22,8 @@ interface ActiveOrdersScreenProps {
 /**
  * Active Orders Screen
  * Displays incoming and processing orders in split-screen layout
+ * Left side: Incoming orders ("incoming" status in DB) - brand new orders just received
+ * Right side: Processing orders ("pending" + "processing" status in DB) - orders being worked on
  * Receives order data as props from parent KitchenDisplayScreen
  */
 export function ActiveOrdersScreen({ 

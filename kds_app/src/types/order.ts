@@ -7,7 +7,7 @@ export interface Order {
   table_no: string;    // e.g., "Table 4" or "Takeaway"
   price: number;       // e.g., 25.00
   note: string | null; // e.g., "No onions"
-  status: OrderStatus; // "pending", "incoming", "processing", "complete"
+  status: OrderStatus; // "pending", "in_progress", "completed", "rejected"
   created_at?: string; // ISO timestamp (optional for compatibility)
   updated_at?: string; // ISO timestamp (optional for compatibility)
 }
@@ -15,7 +15,7 @@ export interface Order {
 /**
  * Order status enum for type safety
  */
-export type OrderStatus = 'pending' | 'incoming' | 'processing' | 'complete';
+export type OrderStatus = 'pending' | 'in_progress' | 'completed' | 'rejected';
 
 /**
  * Payload for updating order status
