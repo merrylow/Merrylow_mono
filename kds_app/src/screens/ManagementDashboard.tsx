@@ -13,11 +13,7 @@ import { OrderAnalytics } from '../types/menu';
 import { fetchOrderAnalytics } from '../services/supabase';
 import { COLORS, TYPOGRAPHY, SPACING, BORDER_RADIUS, SHADOWS } from '../constants/theme';
 
-interface ManagementDashboardProps {
-  onNavigateToMenu: () => void;
-}
-
-export function ManagementDashboard({ onNavigateToMenu }: ManagementDashboardProps) {
+export function ManagementDashboard({ onNavigateToMenu }: { onNavigateToMenu: () => void }) {
   const [analytics, setAnalytics] = useState<OrderAnalytics | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -177,7 +173,10 @@ export function ManagementDashboard({ onNavigateToMenu }: ManagementDashboardPro
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: '#E5E5E5',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 24,
   },
   
   centered: {
@@ -190,10 +189,21 @@ const styles = StyleSheet.create({
   },
   
   header: {
-    padding: SPACING.lg,
-    backgroundColor: COLORS.surface,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
+    width: '95%',
+    maxWidth: 900,
+    padding: 24,
+    backgroundColor: '#E5E5E5',
+    borderRadius: 28,
+    marginBottom: 12,
+    alignItems: 'center',
+    // Neumorphic shadow
+    shadowColor: '#FFFFFF',
+    shadowOffset: { width: -8, height: -8 },
+    shadowOpacity: 1,
+    shadowRadius: 18,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: '#F0F0F3',
   },
   
   title: {
@@ -208,7 +218,21 @@ const styles = StyleSheet.create({
   },
   
   section: {
-    margin: SPACING.lg,
+    width: '95%',
+    maxWidth: 900,
+    marginTop: 18,
+    marginBottom: 12,
+    padding: 18,
+    backgroundColor: '#E5E5E5',
+    borderRadius: 24,
+    // Neumorphic shadow
+    shadowColor: '#FFFFFF',
+    shadowOffset: { width: -6, height: -6 },
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: '#F0F0F3',
   },
   
   sectionTitle: {

@@ -13,7 +13,7 @@ import {
   unsubscribeFromOrders 
 } from '../services/supabase';
 import { speakOrder } from '../utils/formatOrder';
-import { STTButton } from '../components/STTButton';
+//import { STTButton } from '../components/STTButton';
 import { COLORS } from '../constants/theme';
 
 /**
@@ -244,11 +244,11 @@ export function KitchenDisplayScreen() {
         completedOrderCount={completedOrderCount}
       />
       {/* STT Button for vendor speech commands */}
-      <STTButton onResult={(data) => {
+      {/*<STTButton onResult={(data) => {
         // Optionally handle returned data from speech command here
         // For now, just reload orders in case of updates
         loadOrders();
-      }} />
+      }} />*/}
       {/* Screen Content */}
       <View style={styles.content}>
         {activeTab === 'active' ? (
@@ -274,10 +274,28 @@ export function KitchenDisplayScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: '#E5E5E5',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 24,
   },
-  
   content: {
     flex: 1,
+    width: '95%',
+    maxWidth: 900,
+    maxHeight: 600,
+    backgroundColor: '#bee6fa5e',
+    borderRadius: 28,
+    marginTop: 1,
+    marginBottom: 2,
+    padding: 15,
+    // Neumorphic shadow
+    shadowColor: '#FFFFFF',
+    shadowOffset: { width: -5, height: -5 },
+    shadowOpacity: 1,
+    shadowRadius: 18,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: '#F0F0F3',
   },
 });

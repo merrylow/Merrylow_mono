@@ -5,8 +5,7 @@ import * as Speech from 'expo-speech';
 // import * as Permissions from 'expo-permissions';
 // import * as SpeechToText from 'expo-speech-to-text'; // Placeholder, replace with actual STT lib if needed
 import { getTask } from '../stt/getTask';
-// @ts-ignore
-import Voice from '@react-native-voice/voice';
+// import Voice from '@react-native-voice/voice';
 
 interface STTButtonProps {
   onResult?: (data: any) => void;
@@ -19,56 +18,9 @@ export const STTButton: React.FC<STTButtonProps> = ({ onResult }) => {
   const [result, setResult] = useState<string>('');
   const isMounted = useRef(true);
 
-  React.useEffect(() => {
-    isMounted.current = true;
-    Voice.onSpeechStart = () => {
-      if (!isMounted.current) return;
-      setIsListening(true);
-      setError(null);
-      setResult('');
-    };
-    Voice.onSpeechEnd = () => {
-      if (!isMounted.current) return;
-      setIsListening(false);
-    };
-    Voice.onSpeechError = (e: any) => {
-      if (!isMounted.current) return;
-      setError(e.error?.message || 'Speech recognition error');
-      setIsListening(false);
-    };
-    Voice.onSpeechResults = (e: any) => {
-      if (!isMounted.current) return;
-      const text = e.value?.[0] || '';
-      setResult(text);
-      handleRecognizedSpeech(text);
-    };
-    return () => {
-      isMounted.current = false;
-      Voice.destroy().then(Voice.removeAllListeners);
-    };
-  }, []);
-
-  const handleRecognizedSpeech = async (speech: string) => {
-    setIsProcessing(true);
-    try {
-      const { data, message } = await getTask(speech);
-      if (onResult) onResult(data);
-      if (message) Speech.speak(message);
-    } catch (err) {
-      Alert.alert('STT Error', 'Failed to process speech command.');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
+  // STT functionality is commented out for now so the app can run
   const handlePress = async () => {
-    setError(null);
-    setResult('');
-    try {
-      await Voice.start('en-US');
-    } catch (e) {
-      setError('Could not start voice recognition.');
-    }
+    Alert.alert('STT Disabled', 'Speech-to-text functionality is currently disabled.');
   };
 
   return (
@@ -77,11 +29,7 @@ export const STTButton: React.FC<STTButtonProps> = ({ onResult }) => {
         <MaterialIcons name="mic" size={32} color={isListening ? 'red' : 'black'} />
         <Text style={styles.label}>{isListening ? 'Listening...' : isProcessing ? 'Processing...' : 'Speak'}</Text>
       </TouchableOpacity>
-      {(isListening || isProcessing) && <ActivityIndicator style={{ marginLeft: 10 }} />}
-      {error && <Text style={{ color: 'red', marginLeft: 10 }}>{error}</Text>}
-      {result && !isListening && !isProcessing && (
-        <Text style={{ marginLeft: 10, color: 'green' }}>Heard: {result}</Text>
-      )}
+  {/* STT functionality is disabled, so no status or result shown */}
     </View>
   );
 };
